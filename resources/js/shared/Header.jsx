@@ -5,6 +5,7 @@ import { IoMdSearch } from "react-icons/io";
 import { IoMenu } from "react-icons/io5";
 
 const Header = () => {
+    const { auth } = usePage().props; 
     const [isOpen, setIsOpen] = useState(false);
     const { url } = usePage(); // Get the current URL
 
@@ -54,10 +55,10 @@ const Header = () => {
                                 </Link>
                             </div>
                             <div className="hidden md:block">
-                                <div className='border flex items-center border-gray-300 rounded-md px-4 py-2 focus:ring-[#FFA500]'>
+                                <div className='border flex items-center border-gray-300 rounded-md px-2 focus:ring-[#FFA500]'>
                                     <input
                                         type="text"
-                                        className="outline-none focus:outline-none"
+                                        className="appearance-none bg-transparent border-none px-0 outline-none focus:outline-none focus:ring-0"
                                         placeholder="Search products..."
                                     />
                                     <button><IoMdSearch fill='orange' className='h-5 w-5' /> </button>
@@ -66,6 +67,32 @@ const Header = () => {
                             <Link href="/cart" className="ml-4">
                                 <FaCartShopping fill='orange' className="w-10 h-10" />
                             </Link>
+
+                            
+                                {auth.user ? (
+                                    <Link
+                                        href={route('dashboard')}
+                                        className="hover:text-[#FFA500] block px-3 py-2 rounded-md text-base font-medium"
+                                    >
+                                        Dashboard
+                                    </Link>
+                                ) : (
+                                    <>
+                                        <Link
+                                            href={route('login')}
+                                            className="hover:text-[#FFA500] block px-3 py-2 rounded-md text-base font-medium"
+                                        >
+                                            Log in
+                                        </Link>
+                                        <Link
+                                            href={route('register')}
+                                            className="hover:text-[#FFA500] block px-3 py-2 rounded-md text-base font-medium"
+                                        >
+                                            Register
+                                        </Link>
+                                    </>
+                                )}
+                            
                         </div>
                     </div>
                 </div>
