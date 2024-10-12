@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect, useState} from 'react';
 
 const Slider = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -28,16 +28,26 @@ const Slider = () => {
       setCurrentIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1));
       console.log(currentIndex);
     };
+
+    
   
     const handleNext = () => {
       setCurrentIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1));
     };
+
+    useEffect(()=>{
+      const interval = setInterval(()=>{
+        handleNext();
+      },1000)
+
+      return () => clearInterval(interval);
+    },[])
     return (
 
         <div className="relative w-full h-screen overflow-hidden">
         <div
           className="flex transition-transform duration-700"
-          
+          // style={{ width: `${slides.length * 100}vw`, transform: `translateX(-${currentIndex * 100}vw)` }}
         >
           {slides.map((slide,index) => (
             <div key={slide.id} className={`w-full h-screen flex flex-col justify-center items-center ${index===currentIndex?'flex':'hidden'}`} >
